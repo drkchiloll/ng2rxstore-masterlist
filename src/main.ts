@@ -7,7 +7,7 @@ import { HTTP_PROVIDERS } from '@angular/http';
 
 import { Store } from '@ngrx/store';
 
-import {AppComponent} from './app/app.component';
+import { App } from './components/app';
 
 const ENV_PROVIDERS = [];
 // depending on the env mode, enable prod mode or add debugging modules
@@ -17,7 +17,7 @@ if (process.env.ENV === 'build') {
   ENV_PROVIDERS.push(ELEMENT_PROBE_PROVIDERS);
 }
 
-bootstrap(AppComponent, [
+bootstrap(App, [
     // These are dependencies of our App
     ...HTTP_PROVIDERS,
     ...ROUTER_PROVIDERS,
