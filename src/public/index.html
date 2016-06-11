@@ -3,11 +3,33 @@
   <head>
     <meta charset="utf-8">
     <title>Angular 2 App | ng2-webpack</title>
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
-
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
+    <!-- Material Design icon font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
     <base href="/">
   </head>
   <body>
-    <app>Loading...</app>
+    <div class="content mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">ANGULAR 2 with NGRX</span>
+          <!-- Add spacer, to align navigation to the right -->
+          <div class="mdl-layout-spacer"></div>
+          <!-- Navigation. We hide it in small screens. -->
+          <nav class="mdl-navigation mdl-layout--large-screen-only">
+            <a class="mdl-navigation__link" href="https://angular.io/" target="_blank">ANGULAR 2</a>
+            <a class="mdl-navigation__link" href="https://github.com/ngrx/store" target="_blank">NGRX</a>
+            <a class="mdl-navigation__link" href="https://github.com/simpulton/ngrx-rest-app" target="_blank">SOURCE CODE</a>
+          </nav>
+        </div>
+      </header>
+      <main class="mdl-layout__content page-content">
+        <app class="mdl-grid">
+          <div class="mdl-spinner mdl-js-spinner is-active"></div>
+        </app>
+      </main>
+    </div>
   </body>
 </html>

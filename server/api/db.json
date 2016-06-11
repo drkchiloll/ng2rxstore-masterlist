@@ -1,0 +1,24 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "Item 1",
+      "description": "Item 1 is Better"
+    },
+    {
+      "id": 2,
+      "name": "NG2",
+      "description": "Angular 2 Patterns Rock"
+    },
+    {
+      "name": "Item 3",
+      "description": "This is a lovely description",
+      "id": 3
+    },
+    {
+      "name": "rxjs/Observables",
+      "description": "Reactive Functional Programming",
+      "id": 4
+    }
+  ]
+}
