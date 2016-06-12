@@ -3,6 +3,17 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
+import { Store } from '@ngrx/store';
+
+// Import Action Types
+import {
+  SELECT_ITEM,
+  ADD_ITEMS,
+  CREATE_ITEM,
+  UPDATE_ITEM,
+  DELETE_ITEM
+} from '../constants';
+
 const BASE_URL = 'http://localhost:3000/items/';
 const HEADER = {
   headers: new Headers({'Content-Type': 'application/json'})
@@ -21,44 +32,56 @@ export interface AppStore {
 
 @Injectable()
 export class ItemsService {
-  // items: Observable<Array<Item>>;
+  items;
 
-  constructor(public http: Http) {}
-
-  loadItems(): Observable<Item[]> {
-    return this.http.get(BASE_URL)
-      .map(res => res.json())
-      .catch(this._handleError)
+  constructor(
+    private http: Http,
+    private store: Store<AppStore>
+  ) {
+    this.items = store.select('items');
   }
 
-  modItemResp(items): Item[] {
-    return items.map(item => item);
+  loadItems() {
+    this.http.get(BASE_URL)
+      .map(res => res.json())
+      .map(payload => ({
+        type: ADD_ITEMS,
+        payload
+      }))
+      .subscribe(action => this.store.dispatch(action))
   }
 
   saveItem(item: Item) {
     if(item.id) {
-      return this.updateItem(item)
+      this.updateItem(item)
     } else {
-      return this.createItem(item)
+      this.createItem(item)
     }
   }
 
   createItem(item: Item) {
-    return this.http.post(BASE_URL, JSON.stringify(item), HEADER)
+    this.http.post(BASE_URL, JSON.stringify(item), HEADER)
       .map(res => res.json())
+      .map(payload => ({
+        type: CREATE_ITEM,
+        payload
+      }))
+      .subscribe(action => this.store.dispatch(action))
   }
 
   updateItem(item: Item) {
-    return this.http.put(`${BASE_URL}${item.id}`, JSON.stringify(item), HEADER)
-      .map(res => res.json())
+    this.http.put(`${BASE_URL}${item.id}`, JSON.stringify(item), HEADER)
+      .subscribe(action => this.store.dispatch({
+        type: UPDATE_ITEM,
+        payload: item
+      }))
   }
 
   deleteItem(item: Item) {
-    return this.http.delete(`${BASE_URL + item.id}`)
-      .map(data => item)
-  }
-
-  _handleError(error: Response) {
-    return Observable.throw(error.json().error || 'Server Error');
+    this.http.delete(`${BASE_URL + item.id}`)
+      .subscribe(action => this.store.dispatch({
+        type: DELETE_ITEM,
+        payload: item
+      }))
   }
 }
