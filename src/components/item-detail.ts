@@ -54,16 +54,14 @@ import { Item } from '../services/items';
 })
 
 export class ItemDetail {
-  @Input('item') _item: Item;
-  originalName: string;
-  selectedItem: Item;
-  @Output() saved = new EventEmitter();
-  @Output() cancelled = new EventEmitter();
-
-  set _item(value: Item) {
+  @Input('item') set _item(value: Item) {
     if(value) {
       this.originalName = value.name;
     }
     this.selectedItem = Object.assign({}, value);
   }
+  originalName: string;
+  selectedItem: Item;
+  @Output() saved = new EventEmitter();
+  @Output() cancelled = new EventEmitter();
 }
