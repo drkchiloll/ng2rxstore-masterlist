@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Item } from '../services/items';
 
 @Component({
@@ -50,7 +50,8 @@ import { Item } from '../services/items';
         </div>
       </div>
     `
-  )
+  ),
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class ItemDetail {
