@@ -3,8 +3,7 @@ import {
   Input,
   Output,
   EventEmitter,
-  OnInit,
-  ChangeDetectionStrategy
+  OnInit
 } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
@@ -50,8 +49,7 @@ import { Store } from '@ngrx/store';
   directives: [
     ItemList,
     ItemDetail
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  ]
 })
 
 export class App {
@@ -66,7 +64,7 @@ export class App {
   ngOnInit() {
     this.items = this._itemsService.items;
     this.selectedItem = this.store.select('selectedItem');
-    this.selectedItem.subscribe(v => console.log(v));
+    // this.selectedItem.subscribe(v => console.log(v));
     this._itemsService.loadItems();
   }
 
@@ -87,12 +85,13 @@ export class App {
   }
 
   saveItem(item: Item) {
-    this._itemsService.saveItem(item);
-    this.resetItem();
+    this._itemsService.saveItem(item)
+      .subscribe(() => {
+        this.resetItem();
+      })
   }
 
   deleteItem(item: Item) {
     this._itemsService.deleteItem(item);
-    this.resetItem()
   }
 }
