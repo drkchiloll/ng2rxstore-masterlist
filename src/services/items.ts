@@ -51,27 +51,26 @@ export class ItemsService {
       .subscribe(action => this.store.dispatch(action))
   }
 
-  saveItem(item: Item) {
+  saveItem(item: Item): any {
     if(item.id) {
-      this.updateItem(item)
+      return this.updateItem(item)
     } else {
-      this.createItem(item)
+      return this.createItem(item)
     }
   }
 
   createItem(item: Item) {
-    this.http.post(BASE_URL, JSON.stringify(item), HEADER)
+    return this.http.post(BASE_URL, JSON.stringify(item), HEADER)
       .map(res => res.json())
-      .map(payload => ({
+      .map(payload => this.store.dispatch({
         type: CREATE_ITEM,
         payload
       }))
-      .subscribe(action => this.store.dispatch(action))
   }
 
   updateItem(item: Item) {
-    this.http.put(`${BASE_URL}${item.id}`, JSON.stringify(item), HEADER)
-      .subscribe(action => this.store.dispatch({
+    return this.http.put(`${BASE_URL}${item.id}`, JSON.stringify(item), HEADER)
+      .map(action => this.store.dispatch({
         type: UPDATE_ITEM,
         payload: item
       }))
